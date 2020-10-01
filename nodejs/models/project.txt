@@ -1,0 +1,5 @@
+json
+no author/book exist throw 404 error code
+put book and author
+
+in book API author should be a ref to authors collection

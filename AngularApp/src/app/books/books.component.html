@@ -1,0 +1,98 @@
+<div class="row">
+  <div class="col s12">
+    <div class="card">
+      <div class="card-content white-text">
+        <div class="row">
+<div class="col s5">
+  <form #booksForm="ngForm" (ngSubmit)="onSubmit(booksForm)">
+  <input type="hidden" name="BookId" #BookId="ngModel" [(ngModel)]="booksService.selectedBooks.BookId">
+  <div class="row">
+    <div class="input-field col s10">
+      <input type="text" name="Title" #Title="ngModel" [(ngModel)]="booksService.selectedBooks.Title">
+      <label>Bookname:
+        <Label class="red-text"></Label>
+      </label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="input-field col s10">
+      <input type="text" name="Description" #Description="ngModel" [(ngModel)]="booksService.selectedBooks.Description">
+      <label> Book Description:
+        <Label class="red-text"></Label>
+      </label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="input-field col s10">
+      <input type="number" name="Pagecount" #Pagecount="ngModel" [(ngModel)]="booksService.selectedBooks.Pagecount">
+      <label>Pagecount:
+        <Label class="red-text"></Label>
+      </label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="input-field col s10">
+      <input type="date" name="Publishdate" #Publishdate="ngModel" [(ngModel)]="booksService.selectedBooks.Publishdate">
+      <label>PublishDate:
+        <Label class="red-text"></Label>
+      </label>
+        </div>
+  </div>
+  <div class="row">
+    <div class="input-field col s10">
+      <input type="text" name="Author" #Author="ngModel" [(ngModel)]="booksService.selectedBooks.Author">
+      <label>Author:
+        <Label class="red-text"></Label>
+      </label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="input-field col s15">
+      <button class="btn btn-custom right" type = "submit"> Submit </button>
+      <button class="btn btn-custom right" type = "reset" (click)="resetForm(booksForm)">Reset</button>
+
+    </div>
+  </div>
+
+  </form>
+
+
+</div>
+<div class="col s5">
+  <table class="responsive-table highlight">
+  <thead>
+    <tr>
+      <th>Bookname</th>
+      <th>Description</th>
+      <th>Pagecount</th>
+      <th>Publishate</th>
+      <th>Author</th>
+
+    </tr>
+  </thead>
+  <tr *ngFor="let book of booksService.Books">
+    <td>{{book.Title}}</td>
+    <td>{{book.Description}}</td>
+    <td>{{book.Pagecount}}</td>
+    <td>{{book.Publishdate}}</td>
+    <td>{{book.Author}}</td>
+<td>
+  <a class="action-btn"(click)="onEdit(book)">
+    <i class="material-icons">edit</i>
+  </a>
+  <a class="action-btn"(click)="onDelete(book.BookId,booksForm)">
+    <i class="material-icons">delete</i>
+  </a>
+</td>
+
+
+  </tr>
+  </table>
+
+</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
