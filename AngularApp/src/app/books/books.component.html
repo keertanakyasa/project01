@@ -1,14 +1,15 @@
 <div class="row">
   <div class="col s12">
     <div class="card">
-      <div class="card-content white-text">
+      <div class="card-content black-text">
         <div class="row">
 <div class="col s5">
   <form #booksForm="ngForm" (ngSubmit)="onSubmit(booksForm)">
-  <input type="hidden" name="BookId" #BookId="ngModel" [(ngModel)]="booksService.selectedBooks.BookId">
+    <input type="hidden" name=_id #id="ngModel"[(ngModel)]="booksService.selectedBooks._id">
+
   <div class="row">
     <div class="input-field col s10">
-      <input type="text" name="Title" #Title="ngModel" [(ngModel)]="booksService.selectedBooks.Title">
+      <input type="text" name="bookname" #bookname="ngModel" [(ngModel)]="booksService.selectedBooks.bookname">
       <label>Bookname:
         <Label class="red-text"></Label>
       </label>
@@ -25,36 +26,40 @@
   <div class="row">
     <div class="input-field col s10">
       <input type="number" name="Pagecount" #Pagecount="ngModel" [(ngModel)]="booksService.selectedBooks.Pagecount">
+
       <label>Pagecount:
         <Label class="red-text"></Label>
       </label>
     </div>
   </div>
-  <div class="row">
-    <div class="input-field col s10">
-      <input type="date" name="Publishdate" #Publishdate="ngModel" [(ngModel)]="booksService.selectedBooks.Publishdate">
-      <label>PublishDate:
-        <Label class="red-text"></Label>
-      </label>
-        </div>
-  </div>
-  <div class="row">
-    <div class="input-field col s10">
-      <input type="text" name="Author" #Author="ngModel" [(ngModel)]="booksService.selectedBooks.Author">
-      <label>Author:
-        <Label class="red-text"></Label>
-      </label>
-    </div>
-  </div>
-  <div class="row">
-    <div class="input-field col s15">
-      <button class="btn btn-custom right" type = "submit"> Submit </button>
-      <button class="btn btn-custom right" type = "reset" (click)="resetForm(booksForm)">Reset</button>
 
+<mat-form-field>
+        <mat-label> Publishdate </mat-label>
+        <input matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate" type="text"   name="Publishdate"  #Publishdate="ngModel"  [(ngModel)]="booksService.selectedBooks.Publishdate">
+        <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
+         <mat-datepicker #picker></mat-datepicker>
+</mat-form-field>
+
+  <div class="row">
+    <div class="input-field col s10 ">
+<input type="text" name="Author"  #Author="ngModel" [(ngModel)]="booksService.selectedBooks.Author">
+  <option *ngFor= "let al of AuthorsService" [value]="al">{{al}}</option>
+
+<label>Author:
+  <Label class="red-text"></Label>
+  </label>
     </div>
   </div>
 
-  </form>
+  <div class="row">
+    <div class="input-field col s12">
+      <button class="btn btn-custom left" type="button" (click)="resetForm(booksForm)">Add</button>
+      <button class="btn btn-custom center" type="submit" [disabled]="!booksForm.valid">Submit</button>
+    
+    </div>
+  </div>
+
+ </form>
 
 
 </div>
@@ -71,16 +76,16 @@
     </tr>
   </thead>
   <tr *ngFor="let book of booksService.Books">
-    <td>{{book.Title}}</td>
+    <td>{{book.bookname}}</td>
     <td>{{book.Description}}</td>
     <td>{{book.Pagecount}}</td>
-    <td>{{book.Publishdate}}</td>
+    <td>{{book.Publishdate| date:'dd-MM-yyyy'}}</td>
     <td>{{book.Author}}</td>
 <td>
   <a class="action-btn"(click)="onEdit(book)">
     <i class="material-icons">edit</i>
   </a>
-  <a class="action-btn"(click)="onDelete(book.BookId,booksForm)">
+  <a class="action-btn"(click)="onDelete(book._id,booksForm)">
     <i class="material-icons">delete</i>
   </a>
 </td>

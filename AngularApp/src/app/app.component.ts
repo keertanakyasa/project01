@@ -7,6 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'AngularApp';
+  minDate = new Date();
+  maxDate = new Date(2100, 12, 31);
+
+
 }
 
 

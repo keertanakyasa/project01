@@ -1,0 +1,82 @@
+
+<!--
+<div>
+  <mat-table [dataSource]= "dataSource">
+    <ng-container matColumnDef = "bookname">
+      <mat-header-cell *matHeaderCellDef>bookname</mat-header-cell>
+      <mat-cell *ngFor ="let book of booksService.Books ">{{book.bookname}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef = "Description">
+      <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
+      <mat-cell *ngFor ="let book of booksService.Books">{{book.Description}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef = "Pagecount">
+      <mat-header-cell *matHeaderCellDef>Pagecount</mat-header-cell>
+      <mat-cell *ngFor ="let book of booksService.Books">{{book.Pagecount}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef = "Publishdate">
+      <mat-header-cell *matHeaderCellDef>Publishdate</mat-header-cell>
+      <mat-cell *ngFor ="let book of booksService.Books">{{book.Publishdate}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef = "Author">
+      <mat-header-cell *matHeaderCellDef>Author</mat-header-cell>
+      <mat-cell *ngFor ="let book of booksService.Books">{{book.Author}}</mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef = "displayedColumns" color= "primary"></mat-header-row>
+    <mat-row *matRowDef = "let row; columns:displayedColumns"></mat-row>
+  </mat-table>
+</div>
+-->
+
+
+
+
+
+
+
+<form #booksForm="ngForm">
+  <input class = "form control" type="text" name="Bookname" [(ngModel)]= "bookname" (ngModelChange)="Search()"
+    placeholder="Enter bookname to search">
+
+
+
+  <table class="responsive-table highlight" matSort>
+  <thead>
+    <tr>
+      <th mat-sort-header>Bookname</th>
+      <th mat-sort-header>Description</th>
+      <th mat-sort-header>Pagecount</th>
+      <th mat-sort-header>Publishate</th>
+      <th mat-sort-header>Author</th>
+
+    </tr>
+  </thead>
+  <tr *ngFor="let book of booksService.Books">
+    <td>{{book.bookname}}</td>
+    <td>{{book.Description}}</td>
+    <td>{{book.Pagecount}}</td>
+    <td>{{book.Publishdate| date:'dd-MM-yyyy'}}</td>
+    <td>{{book.Author}}</td>
+<td>
+  <a class="action-btn"(click)="onEdit(book)">
+    <i class="material-icons">edit</i>
+  </a>
+  <a class="action-btn"(click)="onDelete(book._id,booksForm)">
+    <i class="material-icons">delete</i>
+  </a>
+</td>
+
+
+  </tr>
+  </table>
+
+<div style="text-align: center">
+  <button (click)="btnClick()">Add Books</button>
+</div>
+
+
+
+
+
+
+

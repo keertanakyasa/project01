@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
     if (!ObjectId.isValid(req.params.id))
-         return res.status(404).send('No record with given id :{req.params.id}');
+         return res.status(404).send(`No record with given id : ${req.params.id}` );
 
 Books.findById(req.params.id, (err, doc) => {
   if (!err) { res.send(doc); }
@@ -24,8 +24,8 @@ Books.findById(req.params.id, (err, doc) => {
 
 router.post('/', (req, res) => {
   var book = new Books({
-BookID: req.body.BookID,
-Title: req.body.Title,
+BookId: req.body.BookId,
+bookname: req.body.bookname,
 Author: req.body.Author,
 Description: req.body.Description,
 Pagecount: req.body.Pagecount,
@@ -39,10 +39,10 @@ Publishdate: req.body.Publishdate,
 
 router.put('/:id' , (req, res) => {
   if (!ObjectId.isValid(req.params.id))
-  return res.status(404).send('No record with given id :  ${req.params.id}');
+  return res.status(404).send(`No record with given id :  ${req.params.id}`);
   var book = {
-    BookID: req.body.BookID,
-    Title: req.body.Title,
+    BookId: req.body.BookId,
+    bookname: req.body.bookname,
     Author: req.body.Author,
     Description: req.body.Description,
     Pagecount: req.body.Pagecount,
@@ -56,7 +56,7 @@ router.put('/:id' , (req, res) => {
 
 router.delete('/:id', (req, res) => {
   if (!ObjectId.isValid(req.params.id))
-  return res.status(404).send('No record with given id : ${req.params.id}');
+  return res.status(404).send(`No record with given id : ${req.params.id}`);
 
   Books.findByIdAndRemove(req.params.id, (err,doc) => {
     if(!err) { res.send(doc); }

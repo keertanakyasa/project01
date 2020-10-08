@@ -1,9 +1,11 @@
 const mongoose = require('mongoose');
 var Books = mongoose.model('Books', {
-  BookId: {
-    type: Number
+  
+
+  BookId:{
+    type:String
   },
-  Title: {
+  bookname: {
     type: String
   },
 
