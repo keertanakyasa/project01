@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ComponentFactoryResolver, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Books } from '../services/books.model';
 import { Router } from '@angular/router';
 import { BooksService } from '../services/books.service';
 import { Authors } from '../services/authors.model';
 import { AuthorsService } from '../services/authors.service';
+import { FormControl } from '@angular/forms';
+
+
 
 declare var M: any;
 
@@ -12,43 +15,33 @@ declare var M: any;
   selector: 'app-books',
   templateUrl: './books.component.html',
   styleUrls: ['./books.component.css'],
-  providers: [BooksService]
 })
 export class BooksComponent implements OnInit {
   // tslint:disable-next-line: no-shadowed-variable
-  constructor(public booksService: BooksService, private router: Router, public AuthorsService: AuthorsService) { }
+  BookID = new FormControl('');
+  BookName = new FormControl('');
+  authors: Authors[];
   books: Books[];
-
   searchValue: string;
   minDate = new Date();
   maxDate = new Date(2100, 12, 31);
+  selectedBook: Books;
+  buttonText = 'Add';
 
 
-options: string[] = ['J.K Rowling', 'C.S Lewis', 'Chetan Baghat', 'John Green', 'Jeff Kinney', 'Enid Blynton', ];
-objectOptions = [
-  { name : 'J.K Rowling'},
-  { name: 'C.S Lewis'},
-{name: 'Chetan Baghat' },
-{name: 'John Green'},
-{name: 'Jeff Kinney'},
-{name: 'Enid Blynton'}
-];
-  public listItems: Array<string> = [];
-displayFn(subject): void{
-  return subject ? subject.name : undefined;
-}
 
-  ngOnInit(): void {
-    this.resetForm();
-    this.refreshBooksList();
-    this.dropdownRefresh();
-  }
-  resetForm(form?: NgForm): void {
-    if (form) {
-
-      form.reset();
-    }
-    this.booksService.selectedBooks = {
+  // tslint:disable-next-line: no-shadowed-variable
+  constructor(public booksService: BooksService, private router: Router, public AuthorsService: AuthorsService) {
+   console.log(this.booksService.selectedBooks);
+   if ( this.booksService.selectedBooks){
+    this.selectedBook = this.booksService.selectedBooks;
+   }
+  else if (!this.booksService.selectedBooks && localStorage.getItem('Array')){
+    this.selectedBook = JSON.parse( localStorage.getItem('Array'));
+    console.log('selected book is::::' + this.selectedBook);
+   }
+   else if (!this.booksService.selectedBooks && !localStorage.getItem('Array')){
+    this.selectedBook = {
       _id: '',
       BookId: '' ,
       bookname: '',
@@ -56,7 +49,49 @@ displayFn(subject): void{
       Pagecount: null,
       Publishdate: null,
       Author: ''
-    };
+     };
+   }
+  //  else{
+  //    this.selectedBook = {
+  //     _id: '',
+  //     BookId: '' ,
+  //     bookname: '',
+  //     Description: '',
+  //     Pagecount: null,
+  //     Publishdate: null,
+  //     Author: ''
+  //    };
+  //  }
+
+   }
+
+public listItems: any[] = [];
+     ngOnInit(): void {
+     this.resetForm();
+     this.refreshBooksList();
+     this.dropdownRefresh();
+
+  }
+
+
+  resetForm(form?: NgForm): void {
+    if (form) {
+
+      form.reset();
+    }
+    this.booksService.selectedBooks = {
+       _id: '',
+       BookId: '' ,
+       bookname: '',
+       Description: '',
+       Pagecount: null,
+       Publishdate: null,
+       Author: ''
+     };
+  }
+
+  buttonChange(): void {
+    this.buttonText = 'Edit';
   }
   onSubmit(form: NgForm): void {
     if (form.value._id === ''){
@@ -96,13 +131,23 @@ if (confirm('Are you sure to delete this record?') === true) {
 }
 
 dropdownRefresh(): void{
-this.AuthorsService.getAuthorslist().subscribe((res) => {
-  this.AuthorsService.authors = res as Authors[];
+this.AuthorsService.getAuthorslist().subscribe(data => {
+  console.log(data);
+  const array = Object.entries(data);
+  console.log(array);
+  // tslint:disable-next-line: prefer-for-of
+  for (let i = 0; i < array.length; i++) {
 
-});
+console.log(array[i][1].Firstname);
+this.listItems.push(array[i][1].Firstname);
+console.log(this.listItems);
+ }
+
+  });
+
+
+
 }
-
-
 }
 
 

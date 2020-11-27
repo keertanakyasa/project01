@@ -1,81 +1,52 @@
+<div class=search-div>
+<mat-form-field class="search-form-field" floatLabel="never">
+  <input (keyup)="applyFilter($event.target.value)" matInput placeholder="Enter Bookname to search">
+</mat-form-field>
+</div>
+<div class="mat-elevation-28">
+  <mat-table [dataSource]= "dataSource" matSort matSortActive="created" matSortDisableClear matSortDirection="asc" >
+    <ng-container matColumnDef = "bookID">
+      <mat-header-cell mat-sort-header *matHeaderCellDef>BookID</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element._id}}</mat-cell>
+    </ng-container>
 
-<!--
-<div>
-  <mat-table [dataSource]= "dataSource">
     <ng-container matColumnDef = "bookname">
-      <mat-header-cell *matHeaderCellDef>bookname</mat-header-cell>
-      <mat-cell *ngFor ="let book of booksService.Books ">{{book.bookname}}</mat-cell>
+      <mat-header-cell mat-sort-header *matHeaderCellDef>Bookname</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.bookname}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef = "Description">
-      <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
-      <mat-cell *ngFor ="let book of booksService.Books">{{book.Description}}</mat-cell>
+      <mat-header-cell mat-sort-header *matHeaderCellDef>Description</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.Description}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef = "Pagecount">
-      <mat-header-cell *matHeaderCellDef>Pagecount</mat-header-cell>
-      <mat-cell *ngFor ="let book of booksService.Books">{{book.Pagecount}}</mat-cell>
+      <mat-header-cell mat-sort-header *matHeaderCellDef>Pagecount</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.Pagecount}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef = "Publishdate">
-      <mat-header-cell *matHeaderCellDef>Publishdate</mat-header-cell>
-      <mat-cell *ngFor ="let book of booksService.Books">{{book.Publishdate}}</mat-cell>
+      <mat-header-cell mat-sort-header *matHeaderCellDef>Publishdate</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.Publishdate| date:'dd-MM-yyyy'}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef = "Author">
-      <mat-header-cell *matHeaderCellDef>Author</mat-header-cell>
-      <mat-cell *ngFor ="let book of booksService.Books">{{book.Author}}</mat-cell>
+      <mat-header-cell  *matHeaderCellDef mat-sort-header>Author</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.Author}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef ="actions">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let element">
+
+        <button mat-icon-button (click)="onEdit(element)"><mat-icon>launch</mat-icon></button>
+        <button mat-icon-button (click)="onDelete(element._id,dataSource)" ><mat-icon>delete_outline</mat-icon></button>
+      </mat-cell>
+
     </ng-container>
     <mat-header-row *matHeaderRowDef = "displayedColumns" color= "primary"></mat-header-row>
     <mat-row *matRowDef = "let row; columns:displayedColumns"></mat-row>
   </mat-table>
 </div>
--->
 
-
-
-
-
-
-
-<form #booksForm="ngForm">
-  <input class = "form control" type="text" name="Bookname" [(ngModel)]= "bookname" (ngModelChange)="Search()"
-    placeholder="Enter bookname to search">
-
-
-
-  <table class="responsive-table highlight" matSort>
-  <thead>
-    <tr>
-      <th mat-sort-header>Bookname</th>
-      <th mat-sort-header>Description</th>
-      <th mat-sort-header>Pagecount</th>
-      <th mat-sort-header>Publishate</th>
-      <th mat-sort-header>Author</th>
-
-    </tr>
-  </thead>
-  <tr *ngFor="let book of booksService.Books">
-    <td>{{book.bookname}}</td>
-    <td>{{book.Description}}</td>
-    <td>{{book.Pagecount}}</td>
-    <td>{{book.Publishdate| date:'dd-MM-yyyy'}}</td>
-    <td>{{book.Author}}</td>
-<td>
-  <a class="action-btn"(click)="onEdit(book)">
-    <i class="material-icons">edit</i>
-  </a>
-  <a class="action-btn"(click)="onDelete(book._id,booksForm)">
-    <i class="material-icons">delete</i>
-  </a>
-</td>
-
-
-  </tr>
-  </table>
-
-<div style="text-align: center">
-  <button (click)="btnClick()">Add Books</button>
-</div>
-
-
-
+  <div style="text-align: center">
+    <button (click)="btnClick()">Add Books</button>
+  </div>
 
 
 

@@ -4,7 +4,6 @@ export class Authors {
 Id: string;
 
   Firstname: string;
-
-
-
+  Lastname: string ;
+  Books: string;
 }

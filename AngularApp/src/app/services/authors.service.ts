@@ -15,6 +15,6 @@ export class AuthorsService {
 // tslint:disable-next-line: no-unused-expression
 // tslint:disable-next-line: typedef
 getAuthorslist(){
-  return this.http.get(this.baseURI + '/Authors' );
+  return this.http.get(this.baseURI);
 }
 }

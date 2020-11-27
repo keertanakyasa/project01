@@ -10,13 +10,7 @@ var Authors = mongoose.model('Authors', {
   },
 Lastname: {
   type: String
-},
-Books:[
-  {
-    type: mongoose.Schema.Types.ObjectId,
-    ref:'Books'
-  }
-]
+}
 });
 
 
